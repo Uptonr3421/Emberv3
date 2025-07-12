@@ -1,0 +1,79 @@
+{
+  "backgroundAgents": [
+    {
+      "id": "load-project-summary",
+      "description": "Load project_summary.json into LLM context on startup and file changes",
+      "watch": ["project_summary.json"],
+      "events": ["startup","fileChange"],
+      "action": {
+        "type": "loadContextFile",
+        "path": "project_summary.json"
+      }
+    },
+    {
+      "id": "load-ember-personality",
+      "description": "Load ember-personality.txt as the immutable AI persona before any actions and on updates",
+      "watch": ["ember-personality.txt"],
+      "events": ["startup","fileChange"],
+      "action": {
+        "type": "loadContextFile",
+        "path": "ember-personality.txt"
+      }
+    }
+  ],
+
+  "contextWindow": {
+    // hard cap on total tokens per request
+    "maxTokens": 4096,
+    // when we hit this, Ember will warn you instead of silently trimming
+    "warnThreshold": 3500
+  }
+}
+{
+  "backgroundAgents": [
+    {
+      "id": "load-project-summary",
+      "description": "Load project_summary.json into LLM context on startup and file changes",
+      "watch": ["project_summary.json"],
+      "events": ["startup","fileChange"],
+      "action": { "type": "loadContextFile", "path": "project_summary.json" }
+    },
+    {
+      "id": "load-ember-personality",
+      "description": "Load ember-personality.txt as the immutable AI persona before any actions and on updates",
+      "watch": ["ember-personality.txt"],
+      "events": ["startup","fileChange"],
+      "action": { "type": "loadContextFile", "path": "ember-personality.txt" }
+    },
+    {
+      "id": "load-env",
+      "description": "Load environment variables into LLM context on startup & on changes",
+      "watch": [".env"],
+      "events": ["startup","fileChange"],
+      "action": { "type": "loadContextFile", "path": ".env" }
+    },
+    {
+      "id": "watch-dependencies",
+      "description": "Reload dependency list when requirements_complete.txt changes",
+      "watch": ["requirements_complete.txt"],
+      "events": ["fileChange"],
+      "action": { "type": "loadContextFile", "path": "requirements_complete.txt" }
+    },
+    {
+      "id": "startup-greeting",
+      "description": "Let Upton know Ember is online and ready",
+      "events": ["startup"],
+      "action": {
+        "type": "sendMessage",
+        "message": "✅ Ember online! Project summary, persona, .env & deps loaded. Standing by."
+      }
+    }
+  ],
+
+  "contextWindow": {
+    // hard cap on total tokens per request
+    "maxTokens": 4096,
+    // when we hit this, Ember will warn you instead of silently trimming
+    "warnThreshold": 3500
+  }
+}

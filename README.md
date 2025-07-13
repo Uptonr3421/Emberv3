@@ -46,6 +46,7 @@ Emberv3 is a minimal yet extensible workspace designed for creating AI-powered d
 |--------------|-----------------------------------|
 | `API_KEY`    | Your model provider API key       |
 | `MODEL_NAME` | Name / path of the quantized LLM  |
+| `MODEL_PATH` | Filesystem path to the local GGUF model |
 
 Copy `.env.example` to `.env` and fill in the values.
 

@@ -38,6 +38,7 @@ def initialize():
     # Check if required environment variables are loaded
     api_key = os.getenv('API_KEY')
     model_name = os.getenv('MODEL_NAME', 'dolphin-2.9-llama3-8b')
+    model_path = os.getenv('MODEL_PATH', r'C:\Ember\Models\uncensored-jordan-7b.Q4_K_M.gguf')
     
     if api_key:
         console.print(f"✅ API key loaded: [green]{api_key[:8]}...[/]")
@@ -45,6 +46,7 @@ def initialize():
         console.print("⚠️  [yellow]No API key found in environment[/]")
     
     console.print(f"🤖 Model configured: [cyan]{model_name}[/]")
+    console.print(f"📂 Model path: [magenta]{model_path}[/]")
     console.print("✅ [bold green]Ember preloader ready![/]")
 
 if __name__ == "__main__":

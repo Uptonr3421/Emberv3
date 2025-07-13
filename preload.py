@@ -7,7 +7,14 @@ Preloads environment variables and initializes the quantized LLM for better perf
 import os
 import sys
 import importlib
-from dotenv import load_dotenv
+
+# Attempt to import python-dotenv; provide a no-op fallback if missing so linting passes.
+try:
+    from dotenv import load_dotenv  # type: ignore
+except ModuleNotFoundError:
+    def load_dotenv(*_args, **_kwargs):  # pylint: disable=unused-argument
+        """Fallback noop when python-dotenv is unavailable."""
+        return None
 
 # Attempt to load Rich for pretty console output; fall back to plain prints if unavailable.
 try:

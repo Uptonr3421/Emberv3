@@ -1,8 +1,38 @@
 {
-  "name": "My Ember Project",
-  "description": "Brief summary of scope.",
+  "name": "Emberv3 AI Assistant Workspace",
+  "version": "3.0.0",
+  "description": "Advanced AI coding assistant with background agents, LLM integration, and automated project management capabilities.",
+  "type": "AI Assistant Framework",
+  "created": "2025-07-13",
   "goals": [
-    "agent1: do X",
-    "agent2: watch Y"
-  ]
+    "agent1: Monitor project files and automatically load context",
+    "agent2: Maintain AI personality and consistent behavior",
+    "agent3: Watch environment variables and configuration changes",
+    "agent4: Track dependencies and package updates",
+    "agent5: Preload and warm LLM for optimal performance",
+    "agent6: Provide startup notifications and status updates"
+  ],
+  "features": [
+    "Background agent system",
+    "Real-time file watching",
+    "LLM preloading and optimization",
+    "Environment configuration management",
+    "Dependency tracking",
+    "Automated context loading"
+  ],
+  "tech_stack": {
+    "editor": "Cursor IDE",
+    "runtime": "Python 3.13",
+    "ai_framework": "OpenAI API",
+    "config_management": "python-dotenv",
+    "http_client": "requests"
+  },
+  "workspace_structure": {
+    "config": "cursor.config.json",
+    "personality": "ember-personality.txt",
+    "environment": ".env",
+    "dependencies": "requirements_complete.txt",
+    "preloader": "preload.py",
+    "documentation": "README.md"
+  }
 }

@@ -8,6 +8,8 @@ Emberv3 is a minimal yet extensible workspace designed for creating AI-powered d
 • **LLM Pre-loading** — `preload.py` warms your quantized model at startup for snappy responses.
 • **Env & Dependency Management** — Simple `.env` and `requirements_complete.txt` keep secrets and packages tidy.
 • **Personality Injection** — `ember-personality.txt` ensures consistent tone and expertise across sessions.
+• **Claude Integration** — Seamlessly call Anthropic’s Claude models with a simple client.
+• **Web Search Helpers** — Pull in fresh info from the web when needed.
 
 ## 🛠️ Quick Start
 
@@ -47,6 +49,9 @@ Emberv3 is a minimal yet extensible workspace designed for creating AI-powered d
 | `API_KEY`    | Your model provider API key       |
 | `MODEL_NAME` | Name / path of the quantized LLM  |
 | `MODEL_PATH` | Filesystem path to the local GGUF model |
+| `ANTHROPIC_API_KEY` | API key for Claude (Anthropic) |
+| `CLAUDE_MODEL` | Claude model name (e.g., claude-3-haiku-20240307) |
+| `SEARCH_API_KEY` | (Optional) Key for external search provider |
 
 Copy `.env.example` to `.env` and fill in the values.
 

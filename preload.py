@@ -39,6 +39,8 @@ def initialize():
     api_key = os.getenv('API_KEY')
     model_name = os.getenv('MODEL_NAME', 'dolphin-2.9-llama3-8b')
     model_path = os.getenv('MODEL_PATH', r'C:\Ember\Models\uncensored-jordan-7b.Q4_K_M.gguf')
+    anthropic_key = os.getenv('ANTHROPIC_API_KEY')
+    claude_model = os.getenv('CLAUDE_MODEL', 'claude-3-haiku-20240307')
     
     if api_key:
         console.print(f"✅ API key loaded: [green]{api_key[:8]}...[/]")
@@ -47,6 +49,10 @@ def initialize():
     
     console.print(f"🤖 Model configured: [cyan]{model_name}[/]")
     console.print(f"📂 Model path: [magenta]{model_path}[/]")
+    if anthropic_key:
+        console.print(f"🧠 Claude integration: [green]enabled[/] with model [blue]{claude_model}[/]")
+    else:
+        console.print("🧠 Claude integration: [yellow]disabled (no ANTHROPIC_API_KEY)[/]")
     console.print("✅ [bold green]Ember preloader ready![/]")
 
 if __name__ == "__main__":

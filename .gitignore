@@ -1,0 +1,4 @@
+# Model files (too large for git)
+models/*.gguf
+models/*.bin
+models/*.safetensors

@@ -1,0 +1,101 @@
+{
+  "files": {
+    "model_manager_linux.py": {
+      "last_modified": 1752447190.7707505,
+      "event_type": "scanned",
+      "size": 14761
+    },
+    "PROJECT_ANALYSIS.md": {
+      "last_modified": 1752447190.7710323,
+      "event_type": "scanned",
+      "size": 5105
+    },
+    "project_summary.json": {
+      "last_modified": 1752447190.7715142,
+      "event_type": "scanned",
+      "size": 1327
+    },
+    "cursor.config.json": {
+      "last_modified": 1752447190.771882,
+      "event_type": "scanned",
+      "size": 2050
+    },
+    "preload.py": {
+      "last_modified": 1752447190.7720428,
+      "event_type": "scanned",
+      "size": 928
+    },
+    "ember-personality.txt": {
+      "last_modified": 1752447190.7721865,
+      "event_type": "scanned",
+      "size": 1634
+    },
+    "quick_test.py": {
+      "last_modified": 1752447190.7723267,
+      "event_type": "scanned",
+      "size": 7042
+    },
+    ".env": {
+      "last_modified": 1752447190.772469,
+      "event_type": "scanned",
+      "size": 550
+    },
+    "README.md": {
+      "last_modified": 1752447190.7727623,
+      "event_type": "scanned",
+      "size": 9
+    },
+    "start_system.py": {
+      "last_modified": 1752447190.7729084,
+      "event_type": "scanned",
+      "size": 13359
+    },
+    "requirements_complete.txt": {
+      "last_modified": 1752447190.7730644,
+      "event_type": "scanned",
+      "size": 112
+    },
+    "model_manager.py": {
+      "last_modified": 1752447190.7732284,
+      "event_type": "scanned",
+      "size": 10617
+    },
+    "api_server.py": {
+      "last_modified": 1752447190.773546,
+      "event_type": "scanned",
+      "size": 10968
+    },
+    "agents/file_monitor.py": {
+      "last_modified": 1752447190.7737627,
+      "event_type": "scanned",
+      "size": 10815
+    },
+    "agents/__init__.py": {
+      "last_modified": 1752447190.774128,
+      "event_type": "scanned",
+      "size": 75
+    },
+    "models/README.md": {
+      "last_modified": 1752447190.7745447,
+      "event_type": "scanned",
+      "size": 2403
+    },
+    "create_demo_model.py": {
+      "last_modified": 1752447190.7726166,
+      "event_type": "scanned",
+      "size": 5362
+    },
+    ".ember_state.json": {
+      "last_modified": 1752447190.7733803,
+      "event_type": "scanned",
+      "size": 2219
+    },
+    "models/phi-3-mini-4k-instruct-q4.gguf": {
+      "last_modified": 1752447190.7750235,
+      "event_type": "scanned",
+      "size": 2393231072
+    }
+  },
+  "last_scan": 1752447190.8438797,
+  "version": "1.0"
+}

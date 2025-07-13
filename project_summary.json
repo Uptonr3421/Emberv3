@@ -1,0 +1,8 @@
+{
+  "name": "My Ember Project",
+  "description": "Brief summary of scope.",
+  "goals": [
+    "agent1: do X",
+    "agent2: watch Y"
+  ]
+}

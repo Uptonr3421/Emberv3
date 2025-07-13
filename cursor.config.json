@@ -61,7 +61,7 @@
     {
       "id": "ui-polisher",
       "description": "Own Windows-desktop Flutter UI & add-on integration with Material-adjacent themes",
-      "model": "anthropic/claude-3.7-sonnet",
+      "model": "C:\\Ember\\Models\\uncensored-jordan-7b.Q4_K_M.gguf",
       "priority": 500,
       "entry": {"type": "auto"},
       "prompt": "## Role\nOwn Windows-desktop Flutter UI & add-on integration.\n- Re-use existing components in /ui and /plugins; no rewrites.\n- Maintain Material-adjacent dark/light themes in /assets/theme.dart\n- Add startup splash \"Ember Online — Welcome Upton\" + boot.wav\n- Make every plugin load/unload without blocking audio/TTS.\n- Keep commits atomic & self-tested; no dead code.\n\nAsk clarifying questions only when vital."

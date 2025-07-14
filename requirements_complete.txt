@@ -6,3 +6,4 @@ anthropic
 beautifulsoup4
 pytest
 responses
+llama-cpp-python

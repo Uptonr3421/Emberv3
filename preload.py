@@ -13,7 +13,15 @@ import time
 import atexit
 from pathlib import Path
 
+# Logger must be defined before optional imports use it
 logger = logging.getLogger(__name__)
+
+# Import inside runtime to avoid heavy cost if user does not need local model
+try:
+    from local_llm import LocalJordanClient
+except Exception as exc:  # pylint: disable=broad-except
+    LocalJordanClient = None  # type: ignore
+    logger.warning("LocalJordanClient unavailable: %s", exc)
 
 # Attempt to import python-dotenv; provide a no-op fallback if missing so linting passes.
 try:
@@ -93,6 +101,7 @@ def initialize():
             ("Verifying API keys", 0.3),
             ("Setting up model", 0.4),
             ("Preparing Claude client", 0.2),
+            ("Loading local Jordan model", 0.5),
         ]
 
         with Progress(
@@ -138,6 +147,20 @@ def initialize():
     else:
         console.print("[yellow]⚠ Local model file not found. Please verify MODEL_PATH.[/]")
         logger.warning("Local model file not found: %s", model_path)
+
+    # Attempt to load local Jordan model (optional)
+    if LocalJordanClient and path_obj.is_file():
+        try:
+            if Progress is not None:
+                with Progress(SpinnerColumn(), TextColumn("Loading local Jordan 7B model"), console=console, transient=True):
+                    _ = LocalJordanClient(model_path=str(path_obj))
+            else:
+                console.print("[cyan]Loading local Jordan 7B model…[/]")
+                _ = LocalJordanClient(model_path=str(path_obj))
+            console.print("[green]✔ Local Jordan 7B model ready![/]")
+        except RuntimeError as err:
+            console.print(f"[red]✖ Failed to load local model: {err}[/]")
+            logger.error("Failed to load local model: %s", err, exc_info=True)
 
     if anthropic_key:
         console.print(f"🧠 Claude integration: [green]enabled[/] with model [blue]{claude_model}[/]")

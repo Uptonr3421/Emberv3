@@ -20,6 +20,9 @@ DEFAULT_MODEL_PATH = os.getenv(
     "MODEL_PATH", r"C:\Ember\Models\uncensored-jordan-7b.Q4_K_M.gguf"
 )
 DEFAULT_CTX_SIZE = int(os.getenv("MODEL_CTX", "4096"))
+DEFAULT_TOP_P = float(os.getenv("MODEL_TOP_P", "0.95"))
+DEFAULT_TOP_K = int(os.getenv("MODEL_TOP_K", "40"))
+DEFAULT_REPEAT_PENALTY = float(os.getenv("MODEL_REPEAT_PENALTY", "1.1"))
 
 # Attempt dynamic import to keep dependency optional during cold starts
 try:
@@ -52,6 +55,9 @@ class LocalJordanClient:  # pylint: disable=too-few-public-methods
         # `Llama` will mmap the GGUF model; this can be slow the first time.
         self._llm = Llama(model_path=model_path, n_ctx=ctx_size, verbose=False)
         self.temperature = temperature
+        self.top_p = DEFAULT_TOP_P
+        self.top_k = DEFAULT_TOP_K
+        self.repeat_penalty = DEFAULT_REPEAT_PENALTY
 
         logger.info("Local Jordan model loaded successfully.")
 
@@ -75,10 +81,17 @@ class LocalJordanClient:  # pylint: disable=too-few-public-methods
         )
         conversation += "Assistant:"
 
-        output = self._llm(
-            conversation,
-            max_tokens=max_tokens,
-            temperature=self.temperature,
-            stop=["User:", "Assistant:"],
-        )
-        return output["choices"][0]["text"].strip()
+        try:
+            output = self._llm(
+                conversation,
+                max_tokens=max_tokens,
+                temperature=self.temperature,
+                top_p=self.top_p,
+                top_k=self.top_k,
+                repeat_penalty=self.repeat_penalty,
+                stop=["User:", "Assistant:"],
+            )
+            return output["choices"][0]["text"].strip()
+        except Exception as err:  # pylint: disable=broad-except
+            logger.error("Local Jordan generation failed: %s", err, exc_info=True)
+            raise RuntimeError("Local model could not generate a response. See logs for details.") from err

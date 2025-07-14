@@ -1,101 +1,116 @@
 {
   "files": {
     "model_manager_linux.py": {
-      "last_modified": 1752447190.7707505,
+      "last_modified": 1752451305.4523942,
       "event_type": "scanned",
       "size": 14761
     },
     "PROJECT_ANALYSIS.md": {
-      "last_modified": 1752447190.7710323,
+      "last_modified": 1752451305.4529939,
       "event_type": "scanned",
       "size": 5105
     },
     "project_summary.json": {
-      "last_modified": 1752447190.7715142,
+      "last_modified": 1752451305.453784,
       "event_type": "scanned",
       "size": 1327
     },
     "cursor.config.json": {
-      "last_modified": 1752447190.771882,
+      "last_modified": 1752451305.4540691,
       "event_type": "scanned",
       "size": 2050
     },
     "preload.py": {
-      "last_modified": 1752447190.7720428,
+      "last_modified": 1752451305.454359,
       "event_type": "scanned",
       "size": 928
     },
     "ember-personality.txt": {
-      "last_modified": 1752447190.7721865,
+      "last_modified": 1752451305.4546406,
       "event_type": "scanned",
       "size": 1634
     },
     "quick_test.py": {
-      "last_modified": 1752447190.7723267,
+      "last_modified": 1752451305.4548972,
       "event_type": "scanned",
       "size": 7042
     },
     ".env": {
-      "last_modified": 1752447190.772469,
+      "last_modified": 1752451305.4551392,
       "event_type": "scanned",
       "size": 550
     },
     "README.md": {
-      "last_modified": 1752447190.7727623,
+      "last_modified": 1752451305.4556196,
       "event_type": "scanned",
       "size": 9
     },
     "start_system.py": {
-      "last_modified": 1752447190.7729084,
+      "last_modified": 1752451305.455881,
       "event_type": "scanned",
       "size": 13359
     },
     "requirements_complete.txt": {
-      "last_modified": 1752447190.7730644,
+      "last_modified": 1752451305.4561162,
       "event_type": "scanned",
       "size": 112
     },
     "model_manager.py": {
-      "last_modified": 1752447190.7732284,
+      "last_modified": 1752451305.4563475,
       "event_type": "scanned",
       "size": 10617
     },
     "api_server.py": {
-      "last_modified": 1752447190.773546,
+      "last_modified": 1752451305.4573874,
       "event_type": "scanned",
       "size": 10968
     },
     "agents/file_monitor.py": {
-      "last_modified": 1752447190.7737627,
+      "last_modified": 1752451305.4576964,
       "event_type": "scanned",
       "size": 10815
     },
     "agents/__init__.py": {
-      "last_modified": 1752447190.774128,
+      "last_modified": 1752451305.4579566,
       "event_type": "scanned",
       "size": 75
     },
     "models/README.md": {
-      "last_modified": 1752447190.7745447,
+      "last_modified": 1752451305.4586473,
       "event_type": "scanned",
       "size": 2403
     },
     "create_demo_model.py": {
-      "last_modified": 1752447190.7726166,
+      "last_modified": 1752451305.4553795,
       "event_type": "scanned",
       "size": 5362
     },
     ".ember_state.json": {
-      "last_modified": 1752447190.7733803,
+      "last_modified": 1752451305.456879,
       "event_type": "scanned",
-      "size": 2219
+      "size": 2876
     },
     "models/phi-3-mini-4k-instruct-q4.gguf": {
-      "last_modified": 1752447190.7750235,
+      "last_modified": 1752451305.4589405,
       "event_type": "scanned",
       "size": 2393231072
+    },
+    ".cursorrules": {
+      "last_modified": 1752451305.4533353,
+      "event_type": "scanned",
+      "size": 6505
+    },
+    "FINAL_STATUS.md": {
+      "last_modified": 1752451305.456629,
+      "event_type": "scanned",
+      "size": 7569
+    },
+    "DEVELOPMENT_SUMMARY.md": {
+      "last_modified": 1752451305.4571445,
+      "event_type": "scanned",
+      "size": 8868
     }
   },
-  "last_scan": 1752447190.8438797,
+  "last_scan": 1752451305.5319831,
   "version": "1.0"
 }

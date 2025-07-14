@@ -1,0 +1,13 @@
+# Core dependencies
+openai
+requests
+python-dotenv
+llama-cpp-python
+psutil
+colorama
+watchdog
+fastapi
+uvicorn
+pydantic
+jinja2
+python-multipart

@@ -1,116 +1,136 @@
 {
   "files": {
     "model_manager_linux.py": {
-      "last_modified": 1752451305.4523942,
+      "last_modified": 1752452511.5104282,
       "event_type": "scanned",
       "size": 14761
     },
     "PROJECT_ANALYSIS.md": {
-      "last_modified": 1752451305.4529939,
+      "last_modified": 1752452511.5108457,
       "event_type": "scanned",
       "size": 5105
     },
     "project_summary.json": {
-      "last_modified": 1752451305.453784,
+      "last_modified": 1752452511.5117588,
       "event_type": "scanned",
       "size": 1327
     },
     "cursor.config.json": {
-      "last_modified": 1752451305.4540691,
+      "last_modified": 1752452511.5121365,
       "event_type": "scanned",
       "size": 2050
     },
     "preload.py": {
-      "last_modified": 1752451305.454359,
+      "last_modified": 1752452511.512604,
       "event_type": "scanned",
       "size": 928
     },
     "ember-personality.txt": {
-      "last_modified": 1752451305.4546406,
+      "last_modified": 1752452511.513161,
       "event_type": "scanned",
       "size": 1634
     },
     "quick_test.py": {
-      "last_modified": 1752451305.4548972,
+      "last_modified": 1752452511.5139554,
       "event_type": "scanned",
       "size": 7042
     },
     ".env": {
-      "last_modified": 1752451305.4551392,
+      "last_modified": 1752452511.5142028,
       "event_type": "scanned",
       "size": 550
     },
     "README.md": {
-      "last_modified": 1752451305.4556196,
+      "last_modified": 1752452511.5155375,
       "event_type": "scanned",
-      "size": 9
+      "size": 7913
     },
     "start_system.py": {
-      "last_modified": 1752451305.455881,
+      "last_modified": 1752452511.5159836,
       "event_type": "scanned",
       "size": 13359
     },
     "requirements_complete.txt": {
-      "last_modified": 1752451305.4561162,
+      "last_modified": 1752452511.51682,
       "event_type": "scanned",
-      "size": 112
+      "size": 140
     },
     "model_manager.py": {
-      "last_modified": 1752451305.4563475,
+      "last_modified": 1752452511.5171633,
       "event_type": "scanned",
       "size": 10617
     },
     "api_server.py": {
-      "last_modified": 1752451305.4573874,
+      "last_modified": 1752452511.5188022,
       "event_type": "scanned",
       "size": 10968
     },
     "agents/file_monitor.py": {
-      "last_modified": 1752451305.4576964,
+      "last_modified": 1752452511.5190291,
       "event_type": "scanned",
       "size": 10815
     },
     "agents/__init__.py": {
-      "last_modified": 1752451305.4579566,
+      "last_modified": 1752452511.5194187,
       "event_type": "scanned",
       "size": 75
     },
     "models/README.md": {
-      "last_modified": 1752451305.4586473,
+      "last_modified": 1752452511.5196793,
       "event_type": "scanned",
       "size": 2403
     },
     "create_demo_model.py": {
-      "last_modified": 1752451305.4553795,
+      "last_modified": 1752452511.5148494,
       "event_type": "scanned",
       "size": 5362
     },
     ".ember_state.json": {
-      "last_modified": 1752451305.456879,
+      "last_modified": 1752452511.517845,
       "event_type": "scanned",
-      "size": 2876
+      "size": 2998
     },
     "models/phi-3-mini-4k-instruct-q4.gguf": {
-      "last_modified": 1752451305.4589405,
+      "last_modified": 1752452511.5198562,
       "event_type": "scanned",
       "size": 2393231072
     },
     ".cursorrules": {
-      "last_modified": 1752451305.4533353,
+      "last_modified": 1752452511.5114188,
       "event_type": "scanned",
       "size": 6505
     },
     "FINAL_STATUS.md": {
-      "last_modified": 1752451305.456629,
+      "last_modified": 1752452511.5175161,
       "event_type": "scanned",
       "size": 7569
     },
     "DEVELOPMENT_SUMMARY.md": {
-      "last_modified": 1752451305.4571445,
+      "last_modified": 1752452511.5182402,
       "event_type": "scanned",
       "size": 8868
+    },
+    "web_ui.py": {
+      "last_modified": 1752452511.5165117,
+      "event_type": "scanned",
+      "size": 20456
+    },
+    "agents/task_manager.py": {
+      "last_modified": 1752452511.5192363,
+      "event_type": "scanned",
+      "size": 15111
+    },
+    "plugins/example_plugin.py": {
+      "last_modified": 1752452511.5203838,
+      "event_type": "scanned",
+      "size": 7943
+    },
+    "plugins/__init__.py": {
+      "last_modified": 1752452511.5205605,
+      "event_type": "scanned",
+      "size": 10502
     }
   },
-  "last_scan": 1752451305.5319831,
+  "last_scan": 1752452511.665714,
   "version": "1.0"
 }

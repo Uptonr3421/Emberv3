@@ -10,6 +10,7 @@ import importlib
 import log_setup  # noqa: F401 (sets up logging)
 import logging
 import time
+import atexit
 
 logger = logging.getLogger(__name__)
 
@@ -135,6 +136,31 @@ def initialize():
         logger.warning("Claude integration disabled (no ANTHROPIC_API_KEY)")
     console.print("✅ [bold green]Ember preloader ready![/]")
     logger.info("Ember preloader ready!")
+
+    # Helpful usage tips
+    console.print(
+        "\n[bold bright_white]Tips:[/]\n"
+        " • Chat with Claude: [green]>>> from claude_client import ClaudeClient; ClaudeClient().chat('Hello')[/]\n"
+        " • Quick web search: [green]>>> from web_utils import search; search('python decorators')[/]\n"
+        " • Run tests: [green]pytest -q[/]", justify="left"
+    )
+
+# ---------------------------------------------------------------------------
+# Graceful shutdown handler
+# ---------------------------------------------------------------------------
+
+
+def _shutdown() -> None:  # noqa: D401
+    """Display a goodbye banner and flush logs on interpreter exit."""
+    goodbye = "[bold green]\n✅ Ember shutdown complete. Goodbye! 👋[/]"
+    try:
+        console.print(goodbye)
+    except Exception:  # pragma: no cover
+        print("Ember shutdown complete. Goodbye!")
+    logger.info("Ember shutdown complete.")
+
+
+atexit.register(_shutdown)
 
 if __name__ == "__main__":
     initialize()

@@ -16,6 +16,13 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 
+# Optional Rich status spinner
+try:
+    from rich.console import Console as _RichConsole  # type: ignore
+except ModuleNotFoundError:
+    _RichConsole = None  # type: ignore
+_console = _RichConsole() if _RichConsole else None
+
 logger = logging.getLogger(__name__)
 
 _SERP_API_KEY = os.getenv("SEARCH_API_KEY")
@@ -38,12 +45,16 @@ def search(query: str, max_results: int = 5) -> List[Dict[str, str]]:
 def _search_with_serpapi(query: str, max_results: int) -> List[Dict[str, str]]:
     params = {"api_key": _SERP_API_KEY, "engine": "google", "q": query, "num": max_results}
     try:
-        resp = requests.get("https://serpapi.com/search", params=params, headers=HEADERS, timeout=20)
+        if _console:
+            with _console.status("[bold cyan]Searching web via SerpAPI…[/]", spinner="earth"):
+                resp = requests.get("https://serpapi.com/search", params=params, headers=HEADERS, timeout=20)
+        else:
+            resp = requests.get("https://serpapi.com/search", params=params, headers=HEADERS, timeout=20)
         resp.raise_for_status()
         data = resp.json()
     except requests.RequestException as err:
         logger.error("SerpAPI HTTP error: %s", err, exc_info=True)
-        raise
+        raise RuntimeError("Search request failed. Please check your network or API limits.") from err
     results = []
     for item in data.get("organic_results", [])[:max_results]:
         results.append({"title": item.get("title", ""), "href": item.get("link", "")})
@@ -51,11 +62,15 @@ def _search_with_serpapi(query: str, max_results: int) -> List[Dict[str, str]]:
 
 def _search_with_duckduckgo(query: str, max_results: int) -> List[Dict[str, str]]:
     try:
-        resp = requests.post("https://duckduckgo.com/html/", data={"q": query}, headers=HEADERS, timeout=20)
+        if _console:
+            with _console.status("[bold cyan]Searching web via DuckDuckGo…[/]", spinner="earth"):
+                resp = requests.post("https://duckduckgo.com/html/", data={"q": query}, headers=HEADERS, timeout=20)
+        else:
+            resp = requests.post("https://duckduckgo.com/html/", data={"q": query}, headers=HEADERS, timeout=20)
         resp.raise_for_status()
     except requests.RequestException as err:
         logger.error("DuckDuckGo HTTP error: %s", err, exc_info=True)
-        raise
+        raise RuntimeError("DuckDuckGo search failed. Please check your network connection.") from err
     soup = BeautifulSoup(resp.text, "html.parser")
     results = []
     for a in soup.select("a.result__a")[:max_results]:

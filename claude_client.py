@@ -18,6 +18,13 @@ import importlib
 import requests
 from requests import RequestException
 
+# Optional pretty status spinner during network calls
+try:
+    from rich.console import Console as _RichConsole  # type: ignore
+except ModuleNotFoundError:
+    _RichConsole = None  # type: ignore
+_console = _RichConsole() if _RichConsole else None
+
 logger = logging.getLogger(__name__)
 
 DEFAULT_MODEL = os.getenv("CLAUDE_MODEL", "claude-3-haiku-20240307")
@@ -115,10 +122,15 @@ class ClaudeClient:  # pylint: disable=too-few-public-methods
             "messages": messages,
         }
         try:
-            response = requests.post(API_URL, headers=headers, json=payload, timeout=self.timeout)
+            if _console:
+                with _console.status("[bold cyan]Contacting Claude API…[/]", spinner="dots"):
+                    response = requests.post(API_URL, headers=headers, json=payload, timeout=self.timeout)
+            else:
+                response = requests.post(API_URL, headers=headers, json=payload, timeout=self.timeout)
+
             response.raise_for_status()
             data = response.json()
             return data["choices"][0]["message"]["content"]
         except RequestException as err:
             logger.error("HTTP request to Anthropic failed: %s", err, exc_info=True)
-            raise
+            raise RuntimeError("Unable to reach Claude API. Please verify your internet connection and API key.") from err

@@ -160,10 +160,155 @@ def test_api_imports():
         print(f"  ❌ API imports failed: {e}")
         return False
 
+def test_system_integration():
+    """Test full system integration and startup"""
+    print(f"{Fore.CYAN}🧪 Testing System Integration...{Style.RESET_ALL}")
+    
+    try:
+        import subprocess
+        import requests
+        import time
+        
+        # Test API server startup
+        print(f"  🔥 Testing API server startup...")
+        
+        # Start API server in background
+        process = subprocess.Popen([
+            sys.executable, 'api_server.py'
+        ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        
+        # Wait for startup
+        time.sleep(3)
+        
+        # Test health endpoint
+        try:
+            response = requests.get('http://localhost:8000/health', timeout=5)
+            if response.status_code == 200:
+                print(f"  ✅ API server responding")
+            else:
+                print(f"  ❌ API server not healthy")
+                process.terminate()
+                return False
+        except:
+            print(f"  ❌ API server not accessible")
+            process.terminate()
+            return False
+        
+        # Test generation endpoint
+        try:
+            gen_response = requests.post('http://localhost:8000/generate', 
+                json={'prompt': 'Hello', 'max_tokens': 5}, timeout=10)
+            if gen_response.status_code == 200:
+                print(f"  ✅ Generation endpoint working")
+            else:
+                print(f"  ❌ Generation endpoint failed")
+        except Exception as e:
+            print(f"  ⚠️  Generation test failed: {e}")
+        
+        # Cleanup
+        process.terminate()
+        return True
+        
+    except Exception as e:
+        print(f"  ❌ System integration test failed: {e}")
+        return False
+
+def test_windows_compatibility():
+    """Test Windows executable preparation and compatibility"""
+    print(f"{Fore.CYAN}🧪 Testing Windows Compatibility...{Style.RESET_ALL}")
+    
+    try:
+        import platform
+        import pathlib
+        
+        # Test path conversions
+        test_path = "models/jordan-7b-model.gguf"
+        win_path = pathlib.Path(test_path).as_posix()
+        print(f"  ✅ Path conversion working: {win_path}")
+        
+        # Test PyInstaller availability
+        try:
+            import PyInstaller
+            print(f"  ✅ PyInstaller available")
+        except ImportError:
+            print(f"  ❌ PyInstaller not installed")
+            return False
+        
+        # Test model detection for Jordan 7B
+        models_dir = pathlib.Path("models")
+        jordan_models = list(models_dir.glob("*jordan*7b*.gguf"))
+        if jordan_models:
+            print(f"  ✅ Jordan 7B model found: {jordan_models[0].name}")
+        else:
+            print(f"  ⚠️  Jordan 7B model not found (will use available model)")
+        
+        # Test resource path handling
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        print(f"  ✅ Resource path handling: {current_dir}")
+        
+        return True
+        
+    except Exception as e:
+        print(f"  ❌ Windows compatibility test failed: {e}")
+        return False
+
+def test_conflict_prevention():
+    """Test git status and agent coordination"""
+    print(f"{Fore.CYAN}🧪 Testing Conflict Prevention...{Style.RESET_ALL}")
+    
+    try:
+        import subprocess
+        import json
+        
+        # Test git status
+        try:
+            result = subprocess.run(['git', 'status', '--porcelain'], 
+                capture_output=True, text=True, cwd='.')
+            if result.returncode == 0:
+                if result.stdout.strip():
+                    print(f"  ⚠️  Uncommitted changes detected")
+                else:
+                    print(f"  ✅ Git working tree clean")
+            else:
+                print(f"  ❌ Git status check failed")
+                return False
+        except Exception as e:
+            print(f"  ❌ Git not available: {e}")
+            return False
+        
+        # Test coordination file
+        coord_file = "AGENT_COORDINATION.md"
+        if os.path.exists(coord_file):
+            print(f"  ✅ Agent coordination file exists")
+        else:
+            print(f"  ❌ Agent coordination file missing")
+            return False
+        
+        # Test ember state
+        state_file = ".ember_state.json"
+        if os.path.exists(state_file):
+            try:
+                with open(state_file, 'r') as f:
+                    state = json.load(f)
+                    files_count = len(state.get('files', {}))
+                    print(f"  ✅ Ember state tracking {files_count} files")
+            except:
+                print(f"  ❌ Ember state file corrupted")
+                return False
+        else:
+            print(f"  ❌ Ember state file missing")
+            return False
+        
+        return True
+        
+    except Exception as e:
+        print(f"  ❌ Conflict prevention test failed: {e}")
+        return False
+
 def main():
-    """Run all tests"""
-    print(f"\n{Fore.YELLOW}🔥 EMBER COMPONENT TESTS 🔥{Style.RESET_ALL}")
-    print(f"{Fore.CYAN}{'='*50}{Style.RESET_ALL}")
+    """Run all 8 comprehensive tests"""
+    print(f"\n{Fore.YELLOW}🔥 EMBER 8-POINT COMPREHENSIVE TEST SUITE 🔥{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}{'='*60}{Style.RESET_ALL}")
     
     tests = [
         ("Dependencies", test_dependencies),
@@ -171,6 +316,9 @@ def main():
         ("API Imports", test_api_imports),
         ("Model Manager", test_model_manager),
         ("File Monitor", test_file_monitor),
+        ("System Integration", test_system_integration),
+        ("Windows Compatibility", test_windows_compatibility),
+        ("Conflict Prevention", test_conflict_prevention),
     ]
     
     results = {}

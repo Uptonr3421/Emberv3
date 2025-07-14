@@ -11,6 +11,7 @@ import log_setup  # noqa: F401 (sets up logging)
 import logging
 import time
 import atexit
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -128,6 +129,16 @@ def initialize():
     logger.info("Model configured: %s", model_name)
     console.print(f"📂 Model path: [magenta]{model_path}[/]")
     logger.info("Model path: %s", model_path)
+
+    # Verify that the local GGUF model exists
+    path_obj = Path(model_path)
+    if path_obj.is_file():
+        console.print("[green]✔ Local model file found.[/]")
+        logger.info("Local model file found at %s", model_path)
+    else:
+        console.print("[yellow]⚠ Local model file not found. Please verify MODEL_PATH.[/]")
+        logger.warning("Local model file not found: %s", model_path)
+
     if anthropic_key:
         console.print(f"🧠 Claude integration: [green]enabled[/] with model [blue]{claude_model}[/]")
         logger.info("Claude integration enabled with model %s", claude_model)

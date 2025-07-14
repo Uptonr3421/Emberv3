@@ -37,17 +37,25 @@ def search(query: str, max_results: int = 5) -> List[Dict[str, str]]:
 
 def _search_with_serpapi(query: str, max_results: int) -> List[Dict[str, str]]:
     params = {"api_key": _SERP_API_KEY, "engine": "google", "q": query, "num": max_results}
-    resp = requests.get("https://serpapi.com/search", params=params, headers=HEADERS, timeout=20)
-    resp.raise_for_status()
-    data = resp.json()
+    try:
+        resp = requests.get("https://serpapi.com/search", params=params, headers=HEADERS, timeout=20)
+        resp.raise_for_status()
+        data = resp.json()
+    except requests.RequestException as err:
+        logger.error("SerpAPI HTTP error: %s", err, exc_info=True)
+        raise
     results = []
     for item in data.get("organic_results", [])[:max_results]:
         results.append({"title": item.get("title", ""), "href": item.get("link", "")})
     return results
 
 def _search_with_duckduckgo(query: str, max_results: int) -> List[Dict[str, str]]:
-    resp = requests.post("https://duckduckgo.com/html/", data={"q": query}, headers=HEADERS, timeout=20)
-    resp.raise_for_status()
+    try:
+        resp = requests.post("https://duckduckgo.com/html/", data={"q": query}, headers=HEADERS, timeout=20)
+        resp.raise_for_status()
+    except requests.RequestException as err:
+        logger.error("DuckDuckGo HTTP error: %s", err, exc_info=True)
+        raise
     soup = BeautifulSoup(resp.text, "html.parser")
     results = []
     for a in soup.select("a.result__a")[:max_results]:

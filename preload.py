@@ -7,6 +7,10 @@ Preloads environment variables and initializes the quantized LLM for better perf
 import os
 import sys
 import importlib
+import log_setup  # noqa: F401 (sets up logging)
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Attempt to import python-dotenv; provide a no-op fallback if missing so linting passes.
 try:
@@ -34,6 +38,7 @@ def initialize():
     This function will be called to warm up the model before processing.
     """
     console.print("🔥 [bold]Ember LLM preloader initializing...[/]")
+    logger.info("Ember LLM preloader initializing...")
     
     # Check if required environment variables are loaded
     api_key = os.getenv('API_KEY')
@@ -44,16 +49,23 @@ def initialize():
     
     if api_key:
         console.print(f"✅ API key loaded: [green]{api_key[:8]}...[/]")
+        logger.info("API key loaded: %s...", api_key[:8])
     else:
         console.print("⚠️  [yellow]No API key found in environment[/]")
+        logger.warning("No API key found in environment")
     
     console.print(f"🤖 Model configured: [cyan]{model_name}[/]")
+    logger.info("Model configured: %s", model_name)
     console.print(f"📂 Model path: [magenta]{model_path}[/]")
+    logger.info("Model path: %s", model_path)
     if anthropic_key:
         console.print(f"🧠 Claude integration: [green]enabled[/] with model [blue]{claude_model}[/]")
+        logger.info("Claude integration enabled with model %s", claude_model)
     else:
         console.print("🧠 Claude integration: [yellow]disabled (no ANTHROPIC_API_KEY)[/]")
+        logger.warning("Claude integration disabled (no ANTHROPIC_API_KEY)")
     console.print("✅ [bold green]Ember preloader ready![/]")
+    logger.info("Ember preloader ready!")
 
 if __name__ == "__main__":
     initialize()

@@ -16,6 +16,7 @@ import os
 import logging
 import importlib
 import requests
+from requests import RequestException
 
 logger = logging.getLogger(__name__)
 
@@ -57,13 +58,20 @@ class ClaudeClient:  # pylint: disable=too-few-public-methods
         max_tokens: int = 1024,
         temperature: float = 0.7,
     ) -> str:
-        """Generate a completion for *prompt* and return the assistant response text."""
+        """Generate a completion for *prompt* and return the assistant response text.
+
+        Any unexpected errors are logged and re-raised for upstream handling.
+        """
         if messages is None:
             messages = [{"role": "user", "content": prompt}]
 
-        if self._sdk_client is not None:
-            return self._chat_with_sdk(messages, max_tokens, temperature)
-        return self._chat_with_http(messages, max_tokens, temperature)
+        try:
+            if self._sdk_client is not None:
+                return self._chat_with_sdk(messages, max_tokens, temperature)
+            return self._chat_with_http(messages, max_tokens, temperature)
+        except Exception as err:  # pylint: disable=broad-except
+            logger.error("Claude chat failed: %s", err, exc_info=True)
+            raise
 
     # ------------------------------------------------------------------
     # Internal helpers
@@ -75,14 +83,18 @@ class ClaudeClient:  # pylint: disable=too-few-public-methods
         temperature: float,
     ) -> str:
         """Use official SDK streaming for best performance."""
-        response = self._sdk_client.messages.create(
+        try:
+            response = self._sdk_client.messages.create(
             model=self.model,
             max_tokens=max_tokens,
             temperature=temperature,
             messages=messages,
         )
-        # The SDK returns an object whose `.content[0].text` holds the assistant reply.
-        return response.content[0].text  # type: ignore[attr-defined]
+            # The SDK returns an object whose `.content[0].text` holds the assistant reply.
+            return response.content[0].text  # type: ignore[attr-defined]
+        except Exception as err:  # pylint: disable=broad-except
+            logger.error("anthropic SDK request failed: %s", err, exc_info=True)
+            raise
 
     def _chat_with_http(
         self,
@@ -102,8 +114,11 @@ class ClaudeClient:  # pylint: disable=too-few-public-methods
             "temperature": temperature,
             "messages": messages,
         }
-        response = requests.post(API_URL, headers=headers, data=json.dumps(payload), timeout=self.timeout)
-        response.raise_for_status()
-        data = response.json()
-        # Compatible with the SDK: retrieve first text block.
-        return data["choices"][0]["message"]["content"]
+        try:
+            response = requests.post(API_URL, headers=headers, json=payload, timeout=self.timeout)
+            response.raise_for_status()
+            data = response.json()
+            return data["choices"][0]["message"]["content"]
+        except RequestException as err:
+            logger.error("HTTP request to Anthropic failed: %s", err, exc_info=True)
+            raise

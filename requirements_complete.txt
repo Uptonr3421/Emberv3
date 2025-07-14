@@ -4,3 +4,5 @@ python-dotenv
 rich
 anthropic
 beautifulsoup4
+pytest
+responses

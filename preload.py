@@ -9,6 +9,7 @@ import sys
 import importlib
 import log_setup  # noqa: F401 (sets up logging)
 import logging
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -28,17 +29,85 @@ except ModuleNotFoundError:
         def print(self, *args, **kwargs):  # pylint: disable=unused-argument
             print(*args)
 
+# Attempt to import optional Rich helpers (Panel, Progress). Fallback to None if unavailable.
+try:
+    Panel = importlib.import_module("rich.panel").Panel  # type: ignore[attr-defined]
+    progress_mod = importlib.import_module("rich.progress")  # type: ignore
+    Progress = progress_mod.Progress  # type: ignore[attr-defined]
+    SpinnerColumn = progress_mod.SpinnerColumn  # type: ignore[attr-defined]
+    BarColumn = progress_mod.BarColumn  # type: ignore[attr-defined]
+    TimeElapsedColumn = progress_mod.TimeElapsedColumn  # type: ignore[attr-defined]
+    TextColumn = progress_mod.TextColumn  # type: ignore[attr-defined]
+except ModuleNotFoundError:  # pragma: no cover
+    Panel = None  # type: ignore
+    Progress = None  # type: ignore
+
 # Load environment variables from .env file
 load_dotenv()
 console = Console()
+
+# ---------------------------------------------------------------------------
+# Helper functions
+# ---------------------------------------------------------------------------
+
+
+def _display_banner() -> None:  # noqa: D401
+    """Render a colorful ASCII-art banner if Rich is available."""
+
+    ascii_art = r"""
+   _____                 _
+  |  ___|               | |
+  | |__ _ __ _   _ _ __ | | ___  ___
+  |  __| '__| | | | '_ \| |/ _ \/ __|
+  | |__| |  | |_| | |_) | |  __/\__ \
+  \____/_|   \__, | .__/|_|\___||___/
+              __/ | |
+             |___/|_|
+    """
+
+    if Panel is not None:
+        console.print(Panel.fit(ascii_art, title="[bold bright_yellow]🔥  Welcome to Emberv3  🔥[/]", border_style="orange1", padding=(1, 4)))
+    else:
+        console.print(ascii_art)
 
 def initialize():
     """
     Placeholder function to initialize the LLM and other components.
     This function will be called to warm up the model before processing.
     """
-    console.print("🔥 [bold]Ember LLM preloader initializing...[/]")
+    # Visual banner
+    _display_banner()
+
+    console.print("\n[bold bright_cyan]Initializing components...[/]")
     logger.info("Ember LLM preloader initializing...")
+
+    # -------------------------------------------------------------------
+    # Optional progress bar for visual feedback
+    # -------------------------------------------------------------------
+
+    if Progress is not None:
+        tasks_to_run = [
+            ("Loading environment", 0.2),
+            ("Verifying API keys", 0.3),
+            ("Setting up model", 0.4),
+            ("Preparing Claude client", 0.2),
+        ]
+
+        with Progress(
+            SpinnerColumn(style="bright_yellow"),
+            "[progress.description]{task.description}",
+            BarColumn(),
+            TimeElapsedColumn(),
+            console=console,
+            transient=True,
+        ) as progress:
+            for desc, delay in tasks_to_run:
+                task_id = progress.add_task(desc, total=100)
+                # quick incremental update rather than sleep entire delay at once
+                for _ in range(10):
+                    time.sleep(delay / 10)
+                    progress.advance(task_id, 10)
+                progress.update(task_id, completed=100)
     
     # Check if required environment variables are loaded
     api_key = os.getenv('API_KEY')
